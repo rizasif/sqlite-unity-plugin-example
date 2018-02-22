@@ -17,6 +17,8 @@ public class DbTestBehaviourScript : MonoBehaviour {
 		mLocationDb.addData(new LocationEntity("4", "AR", "0.005", "0.003"));
 		mLocationDb.addData(new LocationEntity("5", "AR", "0.006", "0.002"));
 		mLocationDb.addData(new LocationEntity("6", "AR", "0.007", "0.001"));
+
+		mLocationDb.setRowByString("6", new LocationEntity("6", "AR", "0.008", "0.000"));
 		mLocationDb.close();
 
 		EventDb mEventDb = new EventDb();
@@ -75,6 +77,7 @@ public class DbTestBehaviourScript : MonoBehaviour {
 			Debug.Log("id: " + entity._id);
 		}
 
+		Debug.Log("Get Data: " + mLocationDb2.getDataByString("6")[2].ToString());
 	}
 	
 	// Update is called once per frame

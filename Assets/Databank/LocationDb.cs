@@ -53,6 +53,21 @@ namespace DataBank{
             return base.getDataById(id);
         }
 
+
+        public void setRowByString(string id, LocationEntity updateEntity){
+            IDbCommand dbcmd = getDbCommand();
+            dbcmd.CommandText =
+                "UPDATE " + TABLE_NAME
+                + " SET "
+                + KEY_TYPE + " = '" + updateEntity._type + "', "
+                + KEY_LAT + " = '" + updateEntity._Lat + "', "
+                + KEY_LNG + " = '" + updateEntity._Lng + "' "
+                
+                + "WHERE " + KEY_ID + " = " + id;
+
+            dbcmd.ExecuteNonQuery();
+        }
+
         public override IDataReader getDataByString(string str)
         {
             Debug.Log(CodistanTag + "Getting Location: " + str);
