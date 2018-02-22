@@ -11,7 +11,7 @@ namespace DataBank
     public class SqliteHelper
     {
         private const string CodistanTag = "Codistan: SqliteHelper:\t";
-        private const string database_name = "madhunt_db10";
+        private const string database_name = "madhunt_db12";
 
         public string db_connection_string;
         public IDbConnection db_connection;

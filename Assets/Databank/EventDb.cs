@@ -119,6 +119,39 @@ namespace DataBank{
             return dbcmd.ExecuteReader();
         }
 
+        public void setRowByString(string id, EventEntity updateEntity){
+            IDbCommand dbcmd = getDbCommand();
+            dbcmd.CommandText =
+                "UPDATE " + TABLE_NAME
+                + " SET "
+
+                + KEY_COUNTRY + " = '" + updateEntity._country + "',"
+                + KEY_ENDDATE + " = '" + updateEntity._endDate + "',"
+                + KEY_IMAGE + " = '" + updateEntity._image + "',"
+                + KEY_HUNT + " = " + Convert.ToInt32(updateEntity._isHunt) + ","
+                + KEY_OTP + " = " + Convert.ToInt32(updateEntity._isOTP) + ","
+                + KEY_PROMO + " = " + Convert.ToInt32(updateEntity._isPromo) + ","
+                + KEY_TEAM + " = " + Convert.ToInt32(updateEntity._isTeam) + ","
+                + KEY_LONG_DESC + " = '" + updateEntity._LongDescription + "',"
+                + KEY_NAME + " = '" + updateEntity._name + "',"
+                + KEY_PROMOCODE + " = '" + updateEntity._promocode + "',"
+                + KEY_SHORT_DESC + " = '" + updateEntity._shortDescription + "',"
+                + KEY_SINGLE_LOGIN + " = " + Convert.ToInt32(updateEntity._singleLogin) + ","
+                + KEY_STARTDATE + " = '" + updateEntity._startDate + "',"
+                + KEY_COUNT_SOLVED + " = '" + updateEntity._counter_solved + "',"
+                + KEY_COUNT_VOUCHERS + " = '" + updateEntity._counter_totalvoucher + "',"
+                + KEY_COUNT_UNSOLVED + " = '" + updateEntity._counter_unsolved + "',"
+                + KEY_LAT + " = '" + updateEntity._geoTag_lat + "',"
+                + KEY_LNG + " = '" + updateEntity._geoTag_lng + "',"
+                + KEY_RAD + " = '" + updateEntity._geotag_radius + "',"
+                + KEY_SOLVED + " = '" + updateEntity._solved_markers + "',"
+                + KEY_UNSOLVED + " = '" + updateEntity._unsolved_markers + "'"
+                
+                + "WHERE " + KEY_ID + " = " + id;
+
+            dbcmd.ExecuteNonQuery();
+        }
+
         public override void deleteDataByString(string id)
         {
             Debug.Log(CodistanTag + "Deleting Event: " + id);

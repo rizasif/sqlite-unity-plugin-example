@@ -25,6 +25,8 @@ public class DbTestBehaviourScript : MonoBehaviour {
 		mEventDb.addData(new EventEntity("0", "","","",false,false,false,false,"","","","",false,"","","","","","","","",""));
 		mEventDb.addData(new EventEntity("1", "","","",false,false,false,false,"","","","",false,"","","","","","","","",""));
 		mEventDb.addData(new EventEntity("2", "","","",false,false,false,false,"","","","",false,"","","","","","","","",""));
+
+		mEventDb.setRowByString("1",new EventEntity("2", "new_data","","",false,false,false,false,"","","","",false,"","","","","","","","",""));
 		mEventDb.close();
 
 		//Fetch All Data
@@ -77,7 +79,7 @@ public class DbTestBehaviourScript : MonoBehaviour {
 			Debug.Log("id: " + entity._id);
 		}
 
-		Debug.Log("Get Data: " + mLocationDb2.getDataByString("6")[2].ToString());
+		Debug.Log("Get Data: " + mEventDb2.getDataByString("1")[1].ToString());
 	}
 	
 	// Update is called once per frame
