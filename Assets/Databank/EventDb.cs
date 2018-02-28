@@ -32,6 +32,7 @@ namespace DataBank{
 		private const string KEY_RAD = "rad";
 		private const string KEY_SOLVED = "solved";
 		private const string KEY_UNSOLVED = "unsolved";
+        private const string KEY_STATIC_CLUES = "staticclues";
         private const string KEY_DATE = "date_created";
 
         private String[] COLUMNS = new String[] {	KEY_ID,
@@ -56,6 +57,7 @@ namespace DataBank{
 													KEY_RAD,
 													KEY_SOLVED,
 													KEY_UNSOLVED,
+                                                    KEY_STATIC_CLUES,
 													KEY_DATE};
 
         public EventDb() : base()
@@ -84,6 +86,7 @@ namespace DataBank{
 				KEY_RAD + " TEXT, " +
 				KEY_SOLVED + " TEXT, " +
 				KEY_UNSOLVED + " TEXT, " +
+                KEY_STATIC_CLUES + " TEXT, " +
                 KEY_DATE + " DATETIME DEFAULT CURRENT_TIMESTAMP )";
             dbcmd.ExecuteNonQuery();
         }
@@ -145,7 +148,8 @@ namespace DataBank{
                 + KEY_LNG + " = '" + updateEntity._geoTag_lng + "',"
                 + KEY_RAD + " = '" + updateEntity._geotag_radius + "',"
                 + KEY_SOLVED + " = '" + updateEntity._solved_markers + "',"
-                + KEY_UNSOLVED + " = '" + updateEntity._unsolved_markers + "'"
+                + KEY_UNSOLVED + " = '" + updateEntity._unsolved_markers + "',"
+                + KEY_STATIC_CLUES + " = '" + updateEntity._static_clues + "'"
                 
                 + "WHERE " + KEY_ID + " = " + id;
 

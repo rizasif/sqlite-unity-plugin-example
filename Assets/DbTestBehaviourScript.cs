@@ -22,11 +22,11 @@ public class DbTestBehaviourScript : MonoBehaviour {
 		mLocationDb.close();
 
 		EventDb mEventDb = new EventDb();
-		mEventDb.addData(new EventEntity("0", "","","",false,false,false,false,"","","","",false,"","","","","","","","",""));
-		mEventDb.addData(new EventEntity("1", "","","",false,false,false,false,"","","","",false,"","","","","","","","",""));
-		mEventDb.addData(new EventEntity("2", "","","",false,false,false,false,"","","","",false,"","","","","","","","",""));
+		mEventDb.addData(new EventEntity("0", "","","",false,false,false,false,"","","","",false,"","","","","","","","","",""));
+		mEventDb.addData(new EventEntity("1", "","","",false,false,false,false,"","","","",false,"","","","","","","","","",""));
+		mEventDb.addData(new EventEntity("2", "","","",false,false,false,false,"","","","",false,"","","","","","","","","",""));
 
-		mEventDb.setRowByString("1",new EventEntity("2", "new_data","","",false,false,false,false,"","","","",false,"","","","","","","","",""));
+		mEventDb.setRowByString("1",new EventEntity("2", "new_data","","",false,false,false,false,"","","","",false,"","","","","","","","","",""));
 		mEventDb.close();
 
 		//Fetch All Data
@@ -74,7 +74,8 @@ public class DbTestBehaviourScript : MonoBehaviour {
 													reader2[18].ToString(),
 													reader2[19].ToString(),
 													reader2[20].ToString(),
-													reader2[21].ToString());
+													reader2[21].ToString(),
+													reader2[22].ToString());
 
 			Debug.Log("id: " + entity._id);
 		}

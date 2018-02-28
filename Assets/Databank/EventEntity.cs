@@ -27,6 +27,7 @@ namespace DataBank{
 		public string _geotag_radius;
 		public string _solved_markers;
 		public string _unsolved_markers;
+		public string _static_clues;
         public string _dateCreated; // Auto generated timestamp
 
         public EventEntity(	string id,
@@ -51,6 +52,7 @@ namespace DataBank{
 							string geotag_radius,
 							string solved_markers,
 							string unsolved_markers,
+							string static_clues,
 							string dateCreated)
         {
             _id = id;
@@ -75,6 +77,7 @@ namespace DataBank{
 			_geotag_radius = geotag_radius;
 			_solved_markers = solved_markers;
 			_unsolved_markers = unsolved_markers;
+			_static_clues = static_clues;
 			_dateCreated = dateCreated;
         }
 
@@ -99,7 +102,8 @@ namespace DataBank{
 							string geoTag_lng,
 							string geotag_radius,
 							string solved_markers,
-							string unsolved_markers)
+							string unsolved_markers,
+							string static_clues)
         {
             _id = id;
 			_country = country;
@@ -123,6 +127,7 @@ namespace DataBank{
 			_geotag_radius = geotag_radius;
 			_solved_markers = solved_markers;
 			_unsolved_markers = unsolved_markers;
+			_static_clues = static_clues;
 			_dateCreated = "";
         }
 
@@ -149,7 +154,8 @@ namespace DataBank{
 			result += _geoTag_lng + "','";
 			result += _geotag_radius + "','";
 			result += _solved_markers + "','";
-			result += _unsolved_markers + "'";
+			result += _unsolved_markers + "','";
+			result += _static_clues  + "'";
 			return "( " + result + " )";
 		}
 	}
