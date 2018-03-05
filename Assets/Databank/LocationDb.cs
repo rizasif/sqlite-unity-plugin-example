@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace DataBank{
+namespace DataBank{ //target, information_activity, points
 	public class LocationDb : SqliteHelper {
 		private const String CodistanTag = "Codistan: LocationDb:\t";
         
@@ -14,8 +14,12 @@ namespace DataBank{
         private const String KEY_TYPE = "type";
         private const String KEY_LAT = "Lat";
         private const String KEY_LNG = "Lng";
+        private const String KEY_TARGET = "Target";
+        private const String KEY_INFO_ACTIVITY = "InfoActivty";
+        private const String KEY_POINTS = "Points";
 		private const String KEY_DATE = "date";
-        private String[] COLUMNS = new String[] {KEY_ID, KEY_TYPE, KEY_LAT, KEY_LNG, KEY_DATE};
+        private String[] COLUMNS = new String[] {KEY_ID, KEY_TYPE, KEY_LAT, KEY_LNG, KEY_TARGET,
+                                                 KEY_INFO_ACTIVITY, KEY_POINTS, KEY_DATE};
 
         public LocationDb() : base()
         {
@@ -25,6 +29,9 @@ namespace DataBank{
                 KEY_TYPE + " TEXT, " +
                 KEY_LAT + " TEXT, " +
                 KEY_LNG + " TEXT, " +
+                KEY_TARGET + " TEXT, " +
+                KEY_INFO_ACTIVITY + " TEXT, " +
+                KEY_POINTS + " TEXT, " +
                 KEY_DATE + " DATETIME DEFAULT CURRENT_TIMESTAMP )";
             dbcmd.ExecuteNonQuery();
         }
@@ -38,13 +45,19 @@ namespace DataBank{
                 + KEY_ID + ", "
                 + KEY_TYPE + ", "
                 + KEY_LAT + ", "
-                + KEY_LNG + " ) "
+                + KEY_LNG + ", "
+                + KEY_TARGET + ", "
+                + KEY_INFO_ACTIVITY + ", "
+                + KEY_POINTS + " ) "
 
                 + "VALUES ( '"
                 + location._id + "', '"
                 + location._type + "', '"
                 + location._Lat + "', '"
-                + location._Lng + "' )";
+                + location._Lng + "', '"
+                + location._Target + "', '"
+                + location._InfoActivity + "', '"
+                + location._Points + "' )";
             dbcmd.ExecuteNonQuery();
         }
 
@@ -61,7 +74,10 @@ namespace DataBank{
                 + " SET "
                 + KEY_TYPE + " = '" + updateEntity._type + "', "
                 + KEY_LAT + " = '" + updateEntity._Lat + "', "
-                + KEY_LNG + " = '" + updateEntity._Lng + "' "
+                + KEY_LNG + " = '" + updateEntity._Lng + "', "
+                + KEY_TARGET + " = '" + updateEntity._Target + "', "
+                + KEY_INFO_ACTIVITY + " = '" + updateEntity._InfoActivity + "', "
+                + KEY_POINTS + " = '" + updateEntity._Points + "' "
                 
                 + "WHERE " + KEY_ID + " = " + id;
 
