@@ -9,6 +9,13 @@ public class DbTestBehaviourScript : MonoBehaviour {
 	void Start () {
 		LocationDb mLocationDb = new LocationDb();
 
+		try{
+			mLocationDb.deleteAllData();
+			mLocationDb = new LocationDb();
+		} catch(UnityException e){
+			Debug.Log(e.Message);
+		}
+
 		//Add Data
 		mLocationDb.addData(new LocationEntity("0", "AR", "0.001", "0.007"));
 		mLocationDb.addData(new LocationEntity("1", "AR", "0.002", "0.006"));
@@ -22,6 +29,14 @@ public class DbTestBehaviourScript : MonoBehaviour {
 		mLocationDb.close();
 
 		EventDb mEventDb = new EventDb();
+
+		try{
+			mEventDb.deleteAllData();
+			mEventDb = new EventDb();
+		} catch(UnityException e){
+			Debug.Log(e.Message);
+		}
+
 		mEventDb.addData(new EventEntity("0", "","","",false,false,false,false,"","","","",false,"","","","","","","","","",""));
 		mEventDb.addData(new EventEntity("1", "","","",false,false,false,false,"","","","",false,"","","","","","","","","",""));
 		mEventDb.addData(new EventEntity("2", "","","",false,false,false,false,"","","","",false,"","","","","","","","","",""));
@@ -80,7 +95,11 @@ public class DbTestBehaviourScript : MonoBehaviour {
 			Debug.Log("id: " + entity._id);
 		}
 
+
 		Debug.Log("Get Data: " + mEventDb2.getDataByString("1")[1].ToString());
+
+		mEventDb2.close();
+		mLocationDb2.close();
 	}
 	
 	// Update is called once per frame
