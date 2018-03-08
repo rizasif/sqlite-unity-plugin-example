@@ -6,58 +6,94 @@ using System.Text;
 using UnityEngine;
 
 namespace DataBank{ 
-	public class LocationDb : SqliteHelper {
-		private const String CodistanTag = "Codistan: LocationDb:\t";
+	public class ChatDb : SqliteHelper {
+		private const String CodistanTag = "Codistan: ChatDb:\t";
         
-        private const String TABLE_NAME = "Locations";
+        private const String TABLE_NAME = "Chats";
         private const String KEY_ID = "id";
+		private const String KEY_CHAT_ID = "ChatId";
+		private const string KEY_NUMBER = "number";
         private const String KEY_TYPE = "type";
         private const String KEY_LAT = "Lat";
         private const String KEY_LNG = "Lng";
-        private const String KEY_TARGET = "Target";
-        private const String KEY_INFO_ACTIVITY = "InfoActivty";
-        private const String KEY_POINTS = "Points";
+        private const String KEY_MESSAGE = "Message";
+        private const String KEY_REC_ID = "ReceiverId";
+        private const String KEY_SEN_ID = "SenderId";
+		private const String KEY_SEN_NAME= "SenderName";
+		private const String KEY_STATUS = "Status";
+		private const string KEY_TIME = "Time";
+		private const string KEY_TIME_STAMP = "Timestamp";
 		private const String KEY_DATE = "date";
-        private String[] COLUMNS = new String[] {KEY_ID, KEY_TYPE, KEY_LAT, KEY_LNG, KEY_TARGET,
-                                                 KEY_INFO_ACTIVITY, KEY_POINTS, KEY_DATE};
+        private String[] COLUMNS = new String[] {	KEY_ID,
+													KEY_CHAT_ID,
+													KEY_NUMBER, 
+													KEY_TYPE, 
+													KEY_LAT, 
+													KEY_LNG, 
+													KEY_MESSAGE, 
+													KEY_REC_ID,
+													KEY_SEN_ID,
+													KEY_SEN_NAME,
+													KEY_STATUS,
+													KEY_TIME,
+													KEY_TIME_STAMP,
+													KEY_DATE	};
 
-        public LocationDb() : base()
+        public ChatDb() : base()
         {
             IDbCommand dbcmd = getDbCommand();
             dbcmd.CommandText = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ( " +
                 KEY_ID + " TEXT PRIMARY KEY, " +
+				KEY_CHAT_ID + " TEXT, " +
+				KEY_NUMBER + " TEXT, " +
                 KEY_TYPE + " TEXT, " +
                 KEY_LAT + " TEXT, " +
                 KEY_LNG + " TEXT, " +
-                KEY_TARGET + " TEXT, " +
-                KEY_INFO_ACTIVITY + " TEXT, " +
-                KEY_POINTS + " TEXT, " +
+                KEY_MESSAGE + " TEXT, " +
+                KEY_REC_ID + " TEXT, " +
+                KEY_SEN_ID + " TEXT, " +
+				KEY_SEN_NAME + " TEXT, " +
+				KEY_STATUS + " TEXT, " +
+				KEY_TIME + " TEXT, " +
+				KEY_TIME_STAMP + " TEXT, " +
                 KEY_DATE + " DATETIME DEFAULT CURRENT_TIMESTAMP )";
             dbcmd.ExecuteNonQuery();
         }
 
-        public void addData(LocationEntity location)
+        public void addData(ChatEntity chat)
         {
             IDbCommand dbcmd = getDbCommand();
             dbcmd.CommandText =
                 "INSERT INTO " + TABLE_NAME
                 + " ( "
                 + KEY_ID + ", "
+				+ KEY_CHAT_ID + ", "
+				+ KEY_NUMBER + ", "
                 + KEY_TYPE + ", "
                 + KEY_LAT + ", "
                 + KEY_LNG + ", "
-                + KEY_TARGET + ", "
-                + KEY_INFO_ACTIVITY + ", "
-                + KEY_POINTS + " ) "
+                + KEY_MESSAGE + ", "
+                + KEY_REC_ID + ", "
+				+ KEY_SEN_ID + ", "
+				+ KEY_SEN_NAME + ", "
+				+ KEY_STATUS + ", "
+				+ KEY_TIME + ", "
+                + KEY_TIME_STAMP + " ) "
 
                 + "VALUES ( '"
-                + location._id + "', '"
-                + location._type + "', '"
-                + location._Lat + "', '"
-                + location._Lng + "', '"
-                + location._Target + "', '"
-                + location._InfoActivity + "', '"
-                + location._Points + "' )";
+                + chat._id + "', '"
+				+ chat._chatId + "', '"
+				+ chat._number + "', '"
+                + chat._type + "', '"
+                + chat._Lat + "', '"
+                + chat._Lng + "', '"
+                + chat._Message + "', '"
+                + chat._ReceiverId + "', '"
+				+ chat._SenderId + "', '"
+				+ chat._SenderName + "', '"
+				+ chat._Status + "', '"
+				+ chat._Time + "', '"
+                + chat._TimeStamp + "' )";
             dbcmd.ExecuteNonQuery();
         }
 
@@ -67,17 +103,23 @@ namespace DataBank{
         }
 
 
-        public void setRowByString(string id, LocationEntity updateEntity){
+        public void setRowByString(string id, ChatEntity updateEntity){
             IDbCommand dbcmd = getDbCommand();
             dbcmd.CommandText =
                 "UPDATE " + TABLE_NAME
                 + " SET "
+				+ KEY_CHAT_ID + " = '" + updateEntity._chatId + "', "
+				+ KEY_NUMBER + " = '" + updateEntity._number + "', "
                 + KEY_TYPE + " = '" + updateEntity._type + "', "
                 + KEY_LAT + " = '" + updateEntity._Lat + "', "
                 + KEY_LNG + " = '" + updateEntity._Lng + "', "
-                + KEY_TARGET + " = '" + updateEntity._Target + "', "
-                + KEY_INFO_ACTIVITY + " = '" + updateEntity._InfoActivity + "', "
-                + KEY_POINTS + " = '" + updateEntity._Points + "' "
+                + KEY_MESSAGE + " = '" + updateEntity._Message + "', "
+                + KEY_REC_ID + " = '" + updateEntity._ReceiverId + "', "
+				+ KEY_SEN_ID + " = '" + updateEntity._SenderId + "', "
+				+ KEY_SEN_NAME + " = '" + updateEntity._SenderName + "', "
+				+ KEY_STATUS + " = '" + updateEntity._Status + "', "
+				+ KEY_TIME + " = '" + updateEntity._Time + "', "
+                + KEY_TIME_STAMP + " = '" + updateEntity._TimeStamp + "' "
                 
                 + "WHERE " + KEY_ID + " = " + id;
 
@@ -86,7 +128,7 @@ namespace DataBank{
 
         public override IDataReader getDataByString(string str)
         {
-            Debug.Log(CodistanTag + "Getting Location: " + str);
+            Debug.Log(CodistanTag + "Getting chat: " + str);
 
             IDbCommand dbcmd = getDbCommand();
             dbcmd.CommandText =
@@ -96,7 +138,7 @@ namespace DataBank{
 
         public override void deleteDataByString(string id)
         {
-            Debug.Log(CodistanTag + "Deleting Location: " + id);
+            Debug.Log(CodistanTag + "Deleting chat: " + id);
 
             IDbCommand dbcmd = getDbCommand();
             dbcmd.CommandText =
@@ -120,6 +162,10 @@ namespace DataBank{
         {
             return base.getAllData(TABLE_NAME);
         }
+
+		public override IDataReader getNumOfRows(){
+			return base.getNumOfRows(TABLE_NAME);
+		}
 
         public IDataReader getNearestLocation(LocationInfo loc)
         {

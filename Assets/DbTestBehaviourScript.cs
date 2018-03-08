@@ -44,6 +44,43 @@ public class DbTestBehaviourScript : MonoBehaviour {
 		mEventDb.setRowByString("1",new EventEntity("2", "new_data","","",false,false,false,false,"","","","",false,"","","","","","","","","",""));
 		mEventDb.close();
 
+		ChatDb mChatDb = new ChatDb();
+
+		try{
+			mChatDb.deleteAllData();
+			mChatDb = new ChatDb();
+		} catch(UnityException e){
+			Debug.Log(e.Message);
+		}
+
+		//Add Data
+		mChatDb.addData(ChatEntity.getFakeChat(0));
+		mChatDb.addData(ChatEntity.getFakeChat(1));
+		mChatDb.addData(ChatEntity.getFakeChat(2));
+		mChatDb.addData(ChatEntity.getFakeChat(3));
+		mChatDb.addData(ChatEntity.getFakeChat(4));
+
+		mChatDb.setRowByString("4", ChatEntity.getFakeChat(6));
+		mChatDb.close();
+
+		FriendsDb mFriendsDb = new FriendsDb();
+
+		try{
+			mFriendsDb.deleteAllData();
+			mFriendsDb = new FriendsDb();
+		} catch(UnityException e){
+			Debug.Log(e.Message);
+		}
+
+		//Add Data
+		mFriendsDb.addData(FriendsEntity.getFakeFriend(0));
+		mFriendsDb.addData(FriendsEntity.getFakeFriend(1));
+		mFriendsDb.addData(FriendsEntity.getFakeFriend(2));
+		mFriendsDb.addData(FriendsEntity.getFakeFriend(3));
+
+		mFriendsDb.setRowByString("3", FriendsEntity.getFakeFriend(3));
+		mFriendsDb.close();
+
 		//Fetch All Data
 		LocationDb mLocationDb2 = new LocationDb();
 		System.Data.IDataReader reader = mLocationDb2.getAllData();
@@ -101,8 +138,51 @@ public class DbTestBehaviourScript : MonoBehaviour {
 
 		Debug.Log("Get Data: " + mEventDb2.getDataByString("1")[1].ToString());
 
+		ChatDb mChatDb2 = new ChatDb();
+		System.Data.IDataReader reader3 = mChatDb2.getAllData();
+
+		Debug.Log("Chat Db Enteries: " + mChatDb2.getNumOfRows()[0].ToString());
+
+		while (reader3.Read())
+		{
+			ChatEntity entity = new ChatEntity(		reader3[0].ToString(), 
+													reader3[1].ToString(), 
+													reader3[2].ToString(),
+													reader3[3].ToString(), 
+													reader3[4].ToString(),
+													reader3[5].ToString(),
+													reader3[6].ToString(),
+													reader3[7].ToString(),
+													reader3[8].ToString(),
+													reader3[9].ToString(),
+													reader3[10].ToString(),
+													reader3[11].ToString(),
+													reader3[12].ToString());
+
+			Debug.Log("id: " + entity._id);
+		}
+
+		FriendsDb mFriendsDb2 = new FriendsDb();
+		System.Data.IDataReader reader4 = mFriendsDb2.getAllData();
+
+		Debug.Log("Chat Db Enteries: " + mFriendsDb2.getNumOfRows()[0].ToString());
+
+		while (reader4.Read())
+		{
+			FriendsEntity entity = new FriendsEntity(	reader4[0].ToString(), 
+														reader4[1].ToString(), 
+														reader4[2].ToString(),
+														reader4[3].ToString(),
+														reader4[4].ToString(),
+														reader4[5].ToString());
+
+			Debug.Log("id: " + entity._id);
+		}
+
 		mEventDb2.close();
 		mLocationDb2.close();
+		mChatDb2.close();
+		mFriendsDb2.close();
 	}
 	
 	// Update is called once per frame

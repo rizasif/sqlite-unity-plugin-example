@@ -6,58 +6,54 @@ using System.Text;
 using UnityEngine;
 
 namespace DataBank{ 
-	public class LocationDb : SqliteHelper {
-		private const String CodistanTag = "Codistan: LocationDb:\t";
+	public class FriendsDb : SqliteHelper {
+		private const String CodistanTag = "Codistan: FriendsDb:\t";
         
-        private const String TABLE_NAME = "Locations";
+        private const String TABLE_NAME = "Friends";
         private const String KEY_ID = "id";
-        private const String KEY_TYPE = "type";
-        private const String KEY_LAT = "Lat";
-        private const String KEY_LNG = "Lng";
-        private const String KEY_TARGET = "Target";
-        private const String KEY_INFO_ACTIVITY = "InfoActivty";
-        private const String KEY_POINTS = "Points";
+		private const String KEY_CHAT_ID = "chatId";
+		private const String KEY_FREIND_NAME = "FirendName";
+		private const String KEY_UNREAD_COUNT = "UnreadMessageCount";
+		private const String KEY_IMAGE = "Image";
 		private const String KEY_DATE = "date";
-        private String[] COLUMNS = new String[] {KEY_ID, KEY_TYPE, KEY_LAT, KEY_LNG, KEY_TARGET,
-                                                 KEY_INFO_ACTIVITY, KEY_POINTS, KEY_DATE};
+        private String[] COLUMNS = new String[] {	KEY_ID,
+													KEY_CHAT_ID,
+													KEY_FREIND_NAME,
+													KEY_UNREAD_COUNT,
+													KEY_IMAGE,
+													KEY_DATE};
 
-        public LocationDb() : base()
+        public FriendsDb() : base()
         {
             IDbCommand dbcmd = getDbCommand();
             dbcmd.CommandText = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ( " +
                 KEY_ID + " TEXT PRIMARY KEY, " +
-                KEY_TYPE + " TEXT, " +
-                KEY_LAT + " TEXT, " +
-                KEY_LNG + " TEXT, " +
-                KEY_TARGET + " TEXT, " +
-                KEY_INFO_ACTIVITY + " TEXT, " +
-                KEY_POINTS + " TEXT, " +
+                KEY_CHAT_ID + " TEXT, " +
+                KEY_FREIND_NAME + " TEXT, " +
+                KEY_UNREAD_COUNT + " TEXT, " +
+                KEY_IMAGE + " TEXT, " +
                 KEY_DATE + " DATETIME DEFAULT CURRENT_TIMESTAMP )";
             dbcmd.ExecuteNonQuery();
         }
 
-        public void addData(LocationEntity location)
+        public void addData(FriendsEntity friend)
         {
             IDbCommand dbcmd = getDbCommand();
             dbcmd.CommandText =
                 "INSERT INTO " + TABLE_NAME
                 + " ( "
                 + KEY_ID + ", "
-                + KEY_TYPE + ", "
-                + KEY_LAT + ", "
-                + KEY_LNG + ", "
-                + KEY_TARGET + ", "
-                + KEY_INFO_ACTIVITY + ", "
-                + KEY_POINTS + " ) "
+                + KEY_CHAT_ID + ", "
+                + KEY_FREIND_NAME + ", "
+                + KEY_UNREAD_COUNT + ", "
+                + KEY_IMAGE + " ) "
 
                 + "VALUES ( '"
-                + location._id + "', '"
-                + location._type + "', '"
-                + location._Lat + "', '"
-                + location._Lng + "', '"
-                + location._Target + "', '"
-                + location._InfoActivity + "', '"
-                + location._Points + "' )";
+                + friend._id + "', '"
+                + friend._ChatId + "', '"
+                + friend._FriendName + "', '"
+                + friend._UnreadMesaageCount + "', '"
+                + friend._Image + "' )";
             dbcmd.ExecuteNonQuery();
         }
 
@@ -66,18 +62,15 @@ namespace DataBank{
             return base.getDataById(id);
         }
 
-
-        public void setRowByString(string id, LocationEntity updateEntity){
+        public void setRowByString(string id, FriendsEntity updateEntity){
             IDbCommand dbcmd = getDbCommand();
             dbcmd.CommandText =
                 "UPDATE " + TABLE_NAME
                 + " SET "
-                + KEY_TYPE + " = '" + updateEntity._type + "', "
-                + KEY_LAT + " = '" + updateEntity._Lat + "', "
-                + KEY_LNG + " = '" + updateEntity._Lng + "', "
-                + KEY_TARGET + " = '" + updateEntity._Target + "', "
-                + KEY_INFO_ACTIVITY + " = '" + updateEntity._InfoActivity + "', "
-                + KEY_POINTS + " = '" + updateEntity._Points + "' "
+                + KEY_CHAT_ID + " = '" + updateEntity._ChatId + "', "
+                + KEY_FREIND_NAME + " = '" + updateEntity._FriendName + "', "
+                + KEY_UNREAD_COUNT + " = '" + updateEntity._UnreadMesaageCount + "', "
+                + KEY_IMAGE + " = '" + updateEntity._Image + "' "
                 
                 + "WHERE " + KEY_ID + " = " + id;
 
@@ -121,21 +114,9 @@ namespace DataBank{
             return base.getAllData(TABLE_NAME);
         }
 
-        public IDataReader getNearestLocation(LocationInfo loc)
-        {
-            Debug.Log(CodistanTag + "Getting nearest centoid from: "
-                + loc.latitude + ", " + loc.longitude);
-            IDbCommand dbcmd = getDbCommand();
-
-            string query =
-                "SELECT * FROM "
-                + TABLE_NAME
-                + " ORDER BY ABS(" + KEY_LAT + " - " + loc.latitude 
-                + ") + ABS(" + KEY_LNG + " - " + loc.longitude + ") ASC LIMIT 1";
-
-            dbcmd.CommandText = query;
-            return dbcmd.ExecuteReader();
-        }
+		public override IDataReader getNumOfRows(){
+			return base.getNumOfRows(TABLE_NAME);
+		}
 
         public IDataReader getLatestTimeStamp()
         {
